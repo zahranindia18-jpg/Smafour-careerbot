@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SMAFOUR CareerBot</title>
+<style>
+:root{--g:#16784b;--d:#105638;--m:#e9f7ef;--ink:#18352a}*{box-sizing:border-box}
+body{margin:0;font:16px Arial,sans-serif;background:#f6fbf7;color:var(--ink);line-height:1.6}
+header{position:sticky;top:0;background:#fffF;backdrop-filter:blur(8px);border-bottom:1px solid #ddd;z-index:3}
+nav,.wrap{max-width:1100px;margin:auto;padding:14px 20px}nav{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+nav a{color:var(--d);font-weight:bold;text-decoration:none}.brand{font-weight:900;color:var(--d)}
+.hero{background:linear-gradient(120deg,#e2f4e8,#fff9df);padding:55px 20px}.hero-in{max-width:1060px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:25px}
+h1{font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;color:var(--d);margin:12px 0}.robot{font-size:8rem}
+.btn{background:var(--g);color:white;border:0;border-radius:11px;padding:12px 18px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block}
+section{padding:45px 0}.heading{text-align:center;margin-bottom:25px}.heading h2{color:var(--d);font-size:2rem;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card,.panel{background:white;border:1px solid #dfebe2;border-radius:16px;padding:19px;box-shadow:0 7px 22px #164d2810}
+.card h3{color:var(--d);margin:5px 0}.icon{font-size:2rem}.details{display:none;border-top:1px solid #ddd;margin-top:12px;padding-top:8px}.details.show{display:block}
+.alt{background:#edf7ef}.question{padding:13px 0;border-bottom:1px solid #eee}.question b{display:block;margin-bottom:8px}
+label{display:block;background:#f2f8f3;padding:7px;margin:5px 0;border-radius:8px}input[type=radio]{accent-color:var(--g)}
+.result{display:none;background:var(--m);padding:15px;border-radius:12px;margin-top:15px}
+.chatbox{height:320px;overflow:auto;background:#f7fbf8;padding:14px;border:1px solid #ddd;border-radius:12px}
+.msg{padding:10px 13px;border-radius:13px;margin:8px 0;max-width:88%;white-space:pre-wrap}.bot{background:#e4f3e8}.user{background:var(--g);color:white;margin-left:auto}
+form.chat{display:flex;gap:8px;margin-top:10px}form.chat input{flex:1;min-width:0;padding:12px;border:1px solid #ccc;border-radius:10px}
+.quick button{margin:5px 4px 5px 0;border:1px solid #cde0d1;background:white;color:var(--d);border-radius:20px;padding:7px 12px;cursor:pointer}
+footer{background:var(--d);color:white;text-align:center;padding:25px}
+@media(max-width:750px){.grid{grid-template-columns:repeat(2,1fr)}.robot{font-size:5rem}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.hero-in{display:block}.robot{text-align:center}form.chat{flex-direction:column}}
+</style></head>
+<body>
+<header><nav><div class="brand">🤖 SMAFOUR CareerBot</div><div><a href="#profesi">Profesi</a>　<a href="#tes">Tes Minat</a>　<a href="#chatbot">Chatbot</a>　<a href="#tips">Persiapan</a></div></nav></header>
+<div class="hero"><div class="hero-in"><div><b>PROYEK EKONOMI KELAS XI · SMA NEGERI 4 CIBINONG</b><h1>Temukan Profesi Impianmu!</h1><p>Kenali pilihan karier masa depan, pendidikan, keterampilan, kisaran gaji, peluang kerja, dan tantangannya.</p><a class="btn" href="#profesi">Mulai Jelajahi Karier →</a></div><div class="robot">🤖</div></div></div>
+
+<section id="profesi"><div class="wrap"><div class="heading"><h2>Jelajahi Profesi</h2><p>Pilih profesi untuk melihat informasi lengkap.</p></div><div class="grid" id="cards"></div><p><small>Catatan: kisaran gaji merupakan perkiraan ilustratif, bukan angka pasti. Gaji dipengaruhi pengalaman, wilayah, perusahaan, dan status pekerjaan.</small></p></div></section>
+
+<section id="tes" class="alt"><div class="wrap"><div class="heading"><h2>Tes Minat Karier</h2><p>Jawab pertanyaan untuk mendapat rekomendasi awal.</p></div><div class="panel"><form id="quiz"><div id="questions"></div><button class="btn">Lihat Rekomendasi</button><div class="result" id="result"></div></form></div></div></section>
+
+<section id="chatbot"><div class="wrap"><div class="heading"><h2>Chatbot SMAFOUR CareerBot</h2><p>Tanyakan informasi seputar profesi dan karier.</p></div><div class="panel"><div class="chatbox" id="chatbox"><div class="msg bot">Halo! 👋 Aku SMAFOUR CareerBot. Tanyakan tentang Guru, Dokter, Programmer, Akuntan, atau Desainer Grafis.</div></div><div class="quick"><button onclick="ask('Jelaskan profesi guru')">Guru</button><button onclick="ask('Jelaskan profesi dokter')">Dokter</button><button onclick="ask('Jelaskan profesi programmer')">Programmer</button><button onclick="ask('Jelaskan profesi akuntan')">Akuntan</button><button onclick="ask('Jelaskan profesi desainer grafis')">Desainer Grafis</button></div><form class="chat" id="chatForm"><input id="chatInput" placeholder="Tulis pertanyaan tentang karier..." required><button class="btn">Kirim</button></form><small>Versi demo menggunakan informasi bawaan website dan belum terhubung ke Gemini API.</small></div></div></section>
+
+<section id="tips" class="alt"><div class="wrap"><div class="heading"><h2>Persiapan Masa Depan</h2></div><div class="grid">
+<div class="card"><h3>🎯 Kenali diri</h3><p>Kenali minat, bakat, kemampuan, dan hal yang kamu sukai.</p></div>
+<div class="card"><h3>📚 Tingkatkan pendidikan</h3><p>Pelajari mata pelajaran yang mendukung profesi impian.</p></div>
+<div class="card"><h3>💡 Kembangkan keterampilan</h3><p>Latih komunikasi, kerja sama, kreativitas, dan kemampuan digital.</p></div>
+<div class="card"><h3>🌱 Cari pengalaman</h3><p>Ikuti organisasi, ekstrakurikuler, pelatihan, dan buat portofolio.</p></div>
+</div></div></section>
+
+<section><div class="wrap panel"><h2>Sumber Informasi</h2>
+<ul><li><a href="https://www.bps.go.id/" target="_blank">Badan Pusat Statistik (BPS)</a> – data ketenagakerjaan.</li>
+<li><a href="https://www.kemendikdasmen.go.id/" target="_blank">Kemendikdasmen</a> – informasi pendidikan.</li>
+<li><a href="https://kemkes.go.id/" target="_blank">Kementerian Kesehatan</a> – informasi kesehatan.</li>
+<li><a href="https://www.komdigi.go.id/" target="_blank">Kementerian Komunikasi dan Digital</a> – informasi digital.</li>
+<li><a href="https://www.iaiglobal.or.id/" target="_blank">Ikatan Akuntan Indonesia</a> – profesi akuntan.</li></ul></div></section>
+<footer><b>SMAFOUR CareerBot</b><br>SMA Negeri 4 Cibinong · Proyek Ekonomi Kelas XI<br>“Kenali Potensimu, Rencanakan Kariermu, Raih Masa Depanmu!”</footer>
+
+<script>
+const jobs=[
+{name:"Guru",icon:"👩‍🏫",edu:"S1/D4 bidang pendidikan yang sesuai dan memenuhi persyaratan profesi guru.",skill:"Mengajar, menguasai materi, komunikasi, kesabaran, kreativitas, tanggung jawab.",salary:"Perkiraan Rp3–8 juta/bulan.",chance:"Sekolah negeri, swasta, kursus, dan bimbingan belajar.",challenge:"Menghadapi beragam karakter siswa dan perkembangan teknologi.",prep:"Latih komunikasi, penguasaan pelajaran, kepemimpinan, dan pengalaman mengajar."},
+{name:"Dokter",icon:"🩺",edu:"S1 Kedokteran dilanjutkan pendidikan profesi dokter dan memenuhi ketentuan yang berlaku.",skill:"Pengetahuan medis, ketelitian, empati, komunikasi, tanggung jawab.",salary:"Perkiraan Rp5–20 juta/bulan.",chance:"Rumah sakit, puskesmas, klinik, dan layanan kesehatan.",challenge:"Pendidikan panjang, tanggung jawab besar, dan jadwal kerja yang dapat berubah.",prep:"Perkuat Biologi dan Kimia, disiplin belajar, dan kemampuan komunikasi."},
+{name:"Programmer",icon:"💻",edu:"D3/S1 Informatika, Teknik Informatika, Sistem Informasi, atau jalur kompetensi terkait.",skill:"Coding, logika, pemecahan masalah, kerja sama, dan belajar mandiri.",salary:"Perkiraan Rp6,5–25 juta/bulan.",chance:"Perusahaan teknologi, startup, perbankan, dan pekerjaan jarak jauh.",challenge:"Teknologi cepat berubah dan persaingan membutuhkan pembelajaran berkelanjutan.",prep:"Belajar coding, Matematika, bahasa Inggris, dan membuat proyek sederhana."},
+{name:"Akuntan",icon:"📊",edu:"S1 Akuntansi atau pendidikan relevan; sertifikasi profesional dapat menjadi nilai tambah.",skill:"Pembukuan, laporan keuangan, perpajakan, Excel, ketelitian, dan integritas.",salary:"Perkiraan Rp4,5–18 juta/bulan.",chance:"Perusahaan, bank, kantor akuntan publik, dan instansi pemerintah.",challenge:"Ketelitian tinggi, tenggat laporan, dan perubahan aturan keuangan.",prep:"Perkuat Matematika dan Ekonomi, belajar Excel, serta mengolah data."},
+{name:"Desainer Grafis",icon:"🎨",edu:"D3/S1 Desain Komunikasi Visual atau bidang terkait; portofolio juga penting.",skill:"Prinsip desain, tipografi, komposisi, aplikasi desain, kreativitas, komunikasi.",salary:"Perkiraan Rp3,5–15 juta/bulan.",chance:"Agensi kreatif, perusahaan, media, studio desain, dan freelance.",challenge:"Mengikuti tren, memahami kebutuhan klien, dan menghadapi revisi.",prep:"Berlatih desain, belajar aplikasi, dan menyusun portofolio karya."}
+];
+const cards=document.getElementById('cards');
+jobs.forEach((j,i)=>{cards.insertAdjacentHTML('beforeend',`<article class="card"><div class="icon">${j.icon}</div><h3>${j.name}</h3><p>${j.edu}</p><button class="btn" onclick="toggle(${i})" id="b${i}">Lihat Selengkapnya</button><div class="details" id="d${i}"><p><b>Pendidikan:</b> ${j.edu}</p><p><b>Keterampilan:</b> ${j.skill}</p><p><b>Kisaran gaji:</b> ${j.salary}</p><p><b>Peluang:</b> ${j.chance}</p><p><b>Tantangan:</b> ${j.challenge}</p><p><b>Persiapan SMA:</b> ${j.prep}</p></div></article>`)});
+function toggle(i){let d=document.getElementById('d'+i),b=document.getElementById('b'+i);d.classList.toggle('show');b.textContent=d.classList.contains('show')?'Tutup':'Lihat Selengkapnya'}
+const qs=[
+["Kegiatan yang paling kamu sukai?",["Mengajar atau menjelaskan","Membantu orang sakit","Menggunakan komputer","Mengatur angka dan uang","Membuat desain"]],
+["Pelajaran yang paling menarik?",["Bahasa dan presentasi","Biologi dan Kimia","Informatika dan Matematika","Ekonomi dan Matematika","Seni dan kreativitas"]],
+["Saat kerja kelompok, kamu suka?",["Membantu teman memahami materi","Memperhatikan kebutuhan orang lain","Mencari solusi teknis","Merapikan data","Membuat tampilan presentasi"]],
+["Kemampuan yang ingin dikembangkan?",["Komunikasi dan mengajar","Ilmu kesehatan","Coding dan logika","Analisis keuangan","Ilustrasi dan desain"]],
+["Lingkungan kerja yang kamu sukai?",["Sekolah","Rumah sakit atau klinik","Tim teknologi","Kantor keuangan","Studio kreatif"]]
+],map=["Guru","Dokter","Programmer","Akuntan","Desainer Grafis"];
+qs.forEach((q,i)=>{document.getElementById('questions').insertAdjacentHTML('beforeend',`<div class="question"><b>${i+1}. ${q[0]}</b>${q[1].map((v,j)=>`<label><input type="radio" name="q${i}" value="${map[j]}" required> ${v}</label>`).join('')}</div>`)});
+document.getElementById('quiz').addEventListener('submit',e=>{e.preventDefault();let s={};qs.forEach((q,i)=>{let v=document.querySelector(`[name=q${i}]:checked`).value;s[v]=(s[v]||0)+1});let best=Object.entries(s).sort((a,b)=>b[1]-a[1])[0][0],j=jobs.find(x=>x.name===best),r=document.getElementById('result');r.style.display='block';r.innerHTML=`<h3>Rekomendasi awal: ${best}</h3><p>${j.prep}</p><p>Ini hanya rekomendasi awal berdasarkan jawabanmu, bukan penentuan karier mutlak. Jelajahi juga profesi lainnya.</p>`});
+function reply(t){let s=t.toLowerCase(),j=jobs.find(x=>s.includes(x.name.toLowerCase())||(x.name==="Programmer"&&/coding|program/.test(s))||(x.name==="Desainer Grafis"&&/desain/.test(s)));if(j)return `${j.icon} PROFESI ${j.name.toUpperCase()}\n\nPendidikan: ${j.edu}\n\nKeterampilan: ${j.skill}\n\nKisaran gaji: ${j.salary}\n\nPeluang kerja: ${j.chance}\n\nTantangan: ${j.challenge}\n\nPersiapan sejak SMA: ${j.prep}`;if(/jurusan|kuliah|pendidikan/.test(s))return "Contoh jurusan: Pendidikan untuk guru, Kedokteran untuk dokter, Informatika untuk programmer, Akuntansi untuk akuntan, dan DKV untuk desainer grafis. Sesuaikan pilihan dengan minat, kemampuan, dan persyaratan kampus.";if(/gaji/.test(s))return "Gaji dalam website ini hanya perkiraan ilustratif. Besarnya dipengaruhi pengalaman, wilayah, perusahaan, posisi, dan status pekerjaan.";if(/persiapan|sma|mulai/.test(s))return "Kenali minat dan bakat, tingkatkan nilai pelajaran, latih komunikasi dan kerja sama, pelajari keterampilan digital, ikuti kegiatan sekolah, dan buat portofolio.";return "Aku dapat menjelaskan Guru, Dokter, Programmer, Akuntan, dan Desainer Grafis. Tulis nama profesi atau tanyakan pendidikan, keterampilan, gaji, peluang, tantangan, atau persiapannya."}
+function add(t,c){let d=document.createElement('div');d.className='msg '+c;d.textContent=t;let b=document.getElementById('chatbox');b.appendChild(d);b.scrollTop=b.scrollHeight}
+function ask(t){add(t,'user');add(reply(t),'bot')}
+document.getElementById('chatForm').addEventListener('submit',e=>{e.preventDefault();let i=document.getElementById('chatInput');if(i.value.trim())ask(i.value.trim());i.value=''});
+</script></body></html>
